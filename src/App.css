@@ -1,0 +1,40 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.choices input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+.choices input[type="radio"]:checked + label + button {
+  background-color: #c95151;
+  padding: 0.5em 1em;
+  border: 2px solid #4d5b9e;
+  border-radius: 1.2em;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.question {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+button.choices {
+  display: inline;
+  margin: 0 20px 20px;
+  padding: 0.5em 1em;
+  background-color: #eee;
+  border: 2px solid #4d5b9e;
+  border-radius: 1.2em;
+  cursor: pointer;
+  font-weight: normal;
+}
