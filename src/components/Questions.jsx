@@ -4,7 +4,6 @@ import he from "he";
 export default function Questions() {
   const [question, setQuestion] = React.useState([]);
   const [displayQuestion, setDisplayQuestion] = React.useState(false);
-  //const [choosenOption, setChoosenOption] = React.useState("");
 
   React.useEffect(() => {
     displayQuestion &&
@@ -17,7 +16,7 @@ export default function Questions() {
   function show() {
     setDisplayQuestion((prev) => !prev);
   }
-  console.log(question);
+
   const questionElements = question?.map((q, index) => {
     const randomIndex = Math.floor(
       Math.random() * q.incorrect_answers.length + 1
@@ -28,19 +27,23 @@ export default function Questions() {
     return (
       <div key={index}>
         <p className="question">{he.decode(q.question)}</p>
-        {options.map((incorrect) => {
+        {options.map((option) => {
           return (
-            <button key={incorrect} className="choices">
+            // <button key={option} className="choices">
+            <div key={option} className="option-container">
               <input
-                id={incorrect}
+                id={option}
                 className="radio-btn"
                 type="radio"
-                value={incorrect}
+                value={option}
                 name={q.question}
                 onClick={(e) => console.log(e.currentTarget.value)}
               />
-              <label htmlFor={incorrect}>{he.decode(incorrect)}</label>
-            </button>
+              <label className="choices" htmlFor={option}>
+                {he.decode(option)}
+              </label>
+            </div>
+            // </button>
           );
         })}
         <hr />

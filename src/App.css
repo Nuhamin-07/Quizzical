@@ -4,7 +4,7 @@
   padding: 2rem;
 }
 
-.choices input[type="radio"] {
+input[type="radio"] {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -14,13 +14,8 @@
   margin: 0;
 }
 
-.choices input[type="radio"]:checked + label + button {
-  background-color: #c95151;
-  padding: 0.5em 1em;
-  border: 2px solid #4d5b9e;
-  border-radius: 1.2em;
-  cursor: pointer;
-  font-weight: normal;
+input[type="radio"]:checked + .choices {
+  background-color: #d6dbf5;
 }
 
 .question {
@@ -28,13 +23,20 @@
   font-weight: bold;
 }
 
-button.choices {
+.choices {
   display: inline;
-  margin: 0 20px 20px;
-  padding: 0.5em 1em;
-  background-color: #eee;
+  margin: 1.2em 1.4em;
+  padding: 0.5em 1.3em;
+  background-color: #fff;
   border: 2px solid #4d5b9e;
   border-radius: 1.2em;
   cursor: pointer;
   font-weight: normal;
+  box-sizing: border-box;
+}
+
+.option-container {
+  width: 100vw;
+  display: inline;
+  margin: 1em 0;
 }
