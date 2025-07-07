@@ -4,13 +4,24 @@ import he from "he";
 export default function Questions() {
   const [question, setQuestion] = React.useState([]);
   const [displayQuestion, setDisplayQuestion] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
-    displayQuestion &&
+    if (displayQuestion) {
+      setIsLoading(true);
       fetch("https://opentdb.com/api.php?amount=5")
         .then((res) => res.json())
-        .then((data) => setQuestion(data.results))
-        .catch((err) => console.error("Fetch error:", err));
+        .then((data) => {
+          setQuestion(data.results);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.error("Fetch error:", err);
+          setIsLoading(false);
+        });
+
+      return;
+    }
   }, [displayQuestion]);
 
   function show() {
@@ -50,8 +61,18 @@ export default function Questions() {
   });
   return (
     <>
-      <section>{questionElements}</section>
-      <button onClick={show}>Questions</button>
+      {displayQuestion ? (
+        isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <section>
+            {questionElements}
+            <button className="check-answer">Check answers</button>
+          </section>
+        )
+      ) : (
+        <button onClick={show}>Questions</button>
+      )}
     </>
   );
 }
