@@ -1,4 +1,5 @@
 #root {
+  font-family: "Inter", sans-serif;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -19,7 +20,7 @@ input[type="radio"]:checked + .choices {
 }
 
 .question {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bold;
 }
 
@@ -33,6 +34,7 @@ input[type="radio"]:checked + .choices {
   cursor: pointer;
   font-weight: normal;
   box-sizing: border-box;
+  font-size: 0.8rem;
 }
 
 .option-container {
