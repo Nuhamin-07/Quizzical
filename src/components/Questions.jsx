@@ -29,7 +29,6 @@ export default function Questions() {
         <p className="question">{he.decode(q.question)}</p>
         {options.map((option) => {
           return (
-            // <button key={option} className="choices">
             <div key={option} className="option-container">
               <input
                 id={option}
@@ -43,7 +42,6 @@ export default function Questions() {
                 {he.decode(option)}
               </label>
             </div>
-            // </button>
           );
         })}
         <hr />
