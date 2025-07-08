@@ -39,10 +39,28 @@ input[type="radio"]:checked + .choices {
 
 .correct {
   background-color: #94d7a2;
+  display: inline;
+  margin: 1.2em 1.4em;
+  padding: 0.5em 1.3em;
+  border: 2px solid #4d5b9e;
+  border-radius: 1.2em;
+  cursor: pointer;
+  font-weight: normal;
+  box-sizing: border-box;
+  font-size: 0.8rem;
 }
 
 .wrong {
   background-color: #f8bcbc;
+  display: inline;
+  margin: 1.2em 1.4em;
+  padding: 0.5em 1.3em;
+  border: 2px solid #4d5b9e;
+  border-radius: 1.2em;
+  cursor: pointer;
+  font-weight: normal;
+  box-sizing: border-box;
+  font-size: 0.8rem;
 }
 
 .option-container {
@@ -60,4 +78,8 @@ button.check-answer {
   margin: 2em auto;
   background-color: #4d5b9e;
   color: #f5f7fb;
+}
+
+input[type="radio"]:disabled {
+  opacity: 0.3;
 }

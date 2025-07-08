@@ -5,6 +5,9 @@ export default function Questions() {
   const [question, setQuestion] = React.useState([]);
   const [displayQuestion, setDisplayQuestion] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [showResults, setShowResults] = React.useState(false);
+  const [correctAnswers, setCorrectAnswers] = React.useState([]);
+  const [selectedAnswers, setSelectedAnswers] = React.useState([]);
 
   React.useEffect(() => {
     if (displayQuestion) {
@@ -12,11 +15,25 @@ export default function Questions() {
       fetch("https://opentdb.com/api.php?amount=5")
         .then((res) => res.json())
         .then((data) => {
-          setQuestion(data.results);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          console.error("Fetch error:", err);
+          console.log(data.results);
+          const processedQuestions = data.results.map((q) => {
+            const options = [...q.incorrect_answers];
+            const randomIndex = Math.floor(
+              Math.random() * (options.length + 1)
+            );
+            options.splice(randomIndex, 0, q.correct_answer);
+            return { ...q, options };
+          });
+
+          setQuestion(processedQuestions); // now includes stable options
+          setCorrectAnswers(
+            data.results.map((q) => ({
+              question: he.decode(q.question),
+              answer: q.correct_answer,
+            }))
+          );
+
+          setSelectedAnswers([]);
           setIsLoading(false);
         });
 
@@ -28,28 +45,72 @@ export default function Questions() {
     setDisplayQuestion((prev) => !prev);
   }
 
+  function handleSelect(e) {
+    const question = he.decode(e.target.name);
+    const answer = e.target.value;
+    setSelectedAnswers((prev) => {
+      const filtered = prev.filter((item) => item.question !== question);
+      return [...filtered, { question, answer }];
+    });
+  }
+
+  function checkAnswer() {
+    let correctCount = 0;
+
+    correctAnswers.forEach((correct) => {
+      const selected = selectedAnswers.find(
+        (sel) =>
+          sel.question === correct.question && sel.answer === correct.answer
+      );
+      if (selected) correctCount++;
+    });
+    setShowResults(true);
+    console.log(`Correct: ${correctCount} out of ${correctAnswers.length}`);
+  }
+
   const questionElements = question?.map((q, index) => {
-    const randomIndex = Math.floor(
-      Math.random() * q.incorrect_answers.length + 1
-    );
-    const options = [...q.incorrect_answers];
-    options.splice(randomIndex, 0, q.correct_answer);
-    console.log(options);
+    const decodedQuestion = he.decode(q.question);
+
     return (
       <div key={index}>
-        <p className="question">{he.decode(q.question)}</p>
-        {options.map((option) => {
+        <p className="question">{decodedQuestion}</p>
+        {q.options.map((option) => {
+          const selected = selectedAnswers.find(
+            (s) => s.question === decodedQuestion
+          );
+          const isSelected = selected?.answer === option;
+          const isCorrectAnswer = q.correct_answer === option;
+
+          let className = "choices";
+
+          if (showResults) {
+            if (isSelected && isCorrectAnswer) {
+              className = " correct";
+            } else if (isSelected && !isCorrectAnswer) {
+              className = " wrong";
+            } else if (!isSelected && isCorrectAnswer) {
+              className = " correct";
+            }
+          }
+
           return (
-            <div key={option} className="option-container">
+            <div
+              key={`${decodedQuestion}-${option}`}
+              className="option-container"
+            >
               <input
-                id={option}
+                id={`${decodedQuestion}-${option}`}
                 className="radio-btn"
                 type="radio"
-                value={option}
-                name={q.question}
-                onClick={(e) => console.log(e.currentTarget.value)}
+                value={he.decode(option)}
+                name={decodedQuestion}
+                disabled={showResults}
+                onClick={handleSelect}
               />
-              <label className="choices" htmlFor={option}>
+              <label
+                className={className}
+                htmlFor={`${decodedQuestion}-${option}`}
+              >
                 {he.decode(option)}
               </label>
             </div>
@@ -67,7 +128,23 @@ export default function Questions() {
         ) : (
           <section>
             {questionElements}
-            <button className="check-answer">Check answers</button>
+            {showResults && (
+              <p>
+                You got{" "}
+                {
+                  selectedAnswers.filter((s) =>
+                    correctAnswers.find(
+                      (c) => c.question === s.question && c.answer === s.answer
+                    )
+                  ).length
+                }{" "}
+                out of {question.length} correct!
+              </p>
+            )}
+
+            <button className="check-answer" onClick={checkAnswer}>
+              Check answers
+            </button>
           </section>
         )
       ) : (
