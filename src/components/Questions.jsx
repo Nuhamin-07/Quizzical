@@ -148,7 +148,12 @@ export default function Questions() {
           </section>
         )
       ) : (
-        <button onClick={show}>Questions</button>
+        <section>
+          <h2>Quizzical</h2>
+          <button className="check-answer" onClick={show}>
+            Start Quiz
+          </button>
+        </section>
       )}
     </>
   );
