@@ -25,7 +25,7 @@ input[type="radio"]:checked + .choices {
 }
 
 .choices {
-  display: inline;
+  display: inline-flex;
   margin: 1.2em 1.4em;
   padding: 0.5em 1.3em;
   background-color: #fff;
@@ -39,7 +39,7 @@ input[type="radio"]:checked + .choices {
 
 .correct {
   background-color: #94d7a2;
-  display: inline;
+  display: inline-flex;
   margin: 1.2em 1.4em;
   padding: 0.5em 1.3em;
   border: 2px solid #4d5b9e;
@@ -52,7 +52,7 @@ input[type="radio"]:checked + .choices {
 
 .wrong {
   background-color: #f8bcbc;
-  display: inline;
+  display: inline-flex;
   margin: 1.2em 1.4em;
   padding: 0.5em 1.3em;
   border: 2px solid #4d5b9e;
