@@ -55,17 +55,7 @@ export default function Questions() {
   }
 
   function checkAnswer() {
-    let correctCount = 0;
-
-    correctAnswers.forEach((correct) => {
-      const selected = selectedAnswers.find(
-        (sel) =>
-          sel.question === correct.question && sel.answer === correct.answer
-      );
-      if (selected) correctCount++;
-    });
     setShowResults(true);
-    console.log(`Correct: ${correctCount} out of ${correctAnswers.length}`);
   }
 
   const questionElements = question?.map((q, index) => {
