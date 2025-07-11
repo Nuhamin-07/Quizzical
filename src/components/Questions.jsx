@@ -15,7 +15,6 @@ export default function Questions() {
       fetch("https://opentdb.com/api.php?amount=5")
         .then((res) => res.json())
         .then((data) => {
-          console.log(data.results);
           const processedQuestions = data.results.map((q) => {
             const options = [...q.incorrect_answers];
             const randomIndex = Math.floor(
